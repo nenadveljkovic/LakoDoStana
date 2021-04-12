@@ -1,0 +1,87 @@
+﻿[data-theme="dark"] {
+    background-color: #111 !important;
+    color: white;
+}
+
+    [data-theme="dark"] .kol {
+        background-color: black;
+        color: #eee;
+    }
+
+    [data-theme="dark"] .poruke {
+        background-color: black;
+        color: #eee;
+        border: none;
+    }
+
+    [data-theme="dark"] .odjava {
+        background-color: black;
+        color: #eee;
+        border: none;
+    }
+
+    [data-theme="dark"] .meni {
+        background-color: black;
+        color: #ffffff;
+        border: none;
+    }
+
+    [data-theme="dark"] .inboxcont {
+        background-color: black;
+        color: #ffffff;
+        border: none;
+    }
+
+    [data-theme="dark"] select {
+        background-color: #333;
+        color: #eee;
+        border: none;
+    }
+
+    [data-theme="dark"] .por {
+        background-color: #333;
+        color: #eee;
+        border: none;
+    }
+
+    [data-theme="dark"] option {
+        background-color: #333;
+        color: #eee;
+        border: none;
+    }
+
+    [data-theme="dark"] .itemi {
+        background-color: black;
+        color: #ffffff;
+        border: none;
+    }
+
+    [data-theme="dark"] textarea {
+        background-color: #333;
+        color: #eee;
+        border: none;
+    }
+
+
+    [data-theme="dark"] input {
+        background-color: #333;
+        color: #eee;
+        border: none;
+    }
+
+    [data-theme="dark"] .bg-light {
+        background-color: #333 !important;
+    }
+
+    [data-theme="dark"] .bg-white {
+        background-color: #000 !important;
+    }
+
+    [data-theme="dark"] .bg-black {
+        background-color: #eee !important;
+    }
+
+    [data-theme="dark"] .footer {
+        background-color: black;
+        color:white;
+    }
