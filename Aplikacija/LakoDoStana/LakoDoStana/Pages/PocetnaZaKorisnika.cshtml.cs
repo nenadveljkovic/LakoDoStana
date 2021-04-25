@@ -8,60 +8,62 @@ using LakoDoStana.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using MongoDB.Driver;
+using System.Collections;
 
 namespace LakoDoStana.Pages
 {
     public class PocetnaZaKorisnikaModel : PageModel
     {
+        
         public Korisnik LogovaniKorisnik;
 
-        public List<Oglas> ListaOglasa;
+        public List<IList<Oglas>> SviOglasi;
+
+        public List<Oglas> ListaOglasa { get; set; }
 
         [BindProperty(Name = "username", SupportsGet = true)]
-        public string Username { get; set; }
-        private readonly LDSContext context;
-        public PocetnaZaKorisnikaModel(LDSContext con)
+        public string username { get; set; }
+
+        private readonly IMongoCollection<Korisnik> _korisnici;
+        public PocetnaZaKorisnikaModel(ILDSDatabaseSettings settings)
         {
-            context = con;
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _korisnici = database.GetCollection<Korisnik>(settings.LDSCollectionName);
         }
 
-        public List<Poruka> poruke;
-
-        public string[] slike;
-
+        public Dictionary<string, string> slike { get; set; }
+        
         public void OnGet()
         {
-            poruke = new List<Poruka>();
-            while (LogovaniKorisnik == null)
-                LogovaniKorisnik = context.Korisnici.Where(x => x.Username == Username).FirstOrDefault();
-            ListaOglasa = context.Oglasi.ToList();
-            poruke = context.Poruke.Where(x => x.PrimalacId == LogovaniKorisnik.ID).Include(x => x.Posiljalac).ToList();
-            poruke.Reverse();
+            LogovaniKorisnik = _korisnici.AsQueryable<Korisnik>().Where(x => x.Username == username).FirstOrDefault();
+            SviOglasi = _korisnici.AsQueryable<Korisnik>().Select(x => x.Oglasi).ToList();
+            ListaOglasa = new List<Oglas>();
+            slike = new Dictionary<string, string>();
+            foreach (IList<Oglas> l in SviOglasi)
+                if(l != null)
+                foreach (Oglas o in l)
+                    ListaOglasa.Add(o);
 
-            slike = new string[100];
-            for (int t = 0; t < 100; t++)
-            {
-                string[] putanje = Directory.GetFiles(@"wwwroot\Pictures");
-                string pom = Path.GetFileName(putanje.First());
-                slike[t] = ("Pictures/" + pom);
-            }
             foreach (Oglas o in ListaOglasa)
             {
                 string[] putanje;
-                if (Directory.Exists(@"wwwroot\Pictures\" + o.OglasId))
+                if (Directory.Exists(@"wwwroot\Pictures\" + o.Id))
                 {
-                    putanje = Directory.GetFiles(@"wwwroot\Pictures\" + o.OglasId);
+                    putanje = Directory.GetFiles(@"wwwroot\Pictures\" + o.Id);
                     {
                         if (putanje.Count() != 0)
                         {
                             string pom = Path.GetFileName(putanje.First());
-                            slike[o.OglasId] = ("Pictures/" + o.OglasId + "/" + pom);
+                            slike.Add(o.Id, "Pictures/" + o.Id + "/" + pom);
                         }
                         else
                         {
                             putanje = Directory.GetFiles(@"wwwroot\Pictures");
                             string pom = Path.GetFileName(putanje.First());
-                            slike[o.OglasId] = ("Pictures/" + pom);
+                            slike.Add(o.Id, "Pictures/" + pom);
                         }
                     }
                 }
@@ -69,23 +71,11 @@ namespace LakoDoStana.Pages
                 {
                     putanje = Directory.GetFiles(@"wwwroot\Pictures");
                     string pom = Path.GetFileName(putanje.First());
-                    slike[o.OglasId] = ("Pictures/" + pom);
+                    slike.Add(o.Id, "Pictures/" + pom);
                 }
             }
         }
-
-        public string IzracunajVreme(Poruka p)
-        {
-            int sekunde = Convert.ToInt32((Convert.ToDateTime(DateTime.Today.ToString("F")) - Convert.ToDateTime(p.DatumSlanja.ToString("F"))).TotalSeconds);
-            int minuti = sekunde / 60;
-            int sati = minuti / 60;
-            int dani = sati / 24;
-            if (dani != 0)
-                return dani + "d ago";
-            else
-                return "Today";
-        }
-
+        
         public string VratiTipObjekta(Oglas o)
         {
             if (o.TipObjekta == 0)
@@ -98,14 +88,7 @@ namespace LakoDoStana.Pages
         {
             return o.DatumObjavljivanja.ToString("dd/MM/yy");
         }
-
-        /*public string VratiUsername(Oglas o)
-        {
-            KorisnikOglas ko = context.KorisniciOglasi.Where(x => x.OglasId == o.OglasId && x.TipVeze == "Postavio").FirstOrDefault();
-            Korisnik k = context.Korisnici.Where(x => x.ID == ko.KorisnikId).FirstOrDefault();
-            return k.Username;
-        }*/
-
+        
         public string VratiTipOglasa(Oglas o)
         {
             if (o.TipOglasa == 0)
@@ -113,5 +96,6 @@ namespace LakoDoStana.Pages
             else
                 return "Traže se stanari!";
         }
+        
     }
 }

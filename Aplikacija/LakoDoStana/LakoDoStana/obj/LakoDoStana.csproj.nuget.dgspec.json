@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\si.20.17.lako_do_stana_mastergrana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {}
+    "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\si.20.17.lako_do_stana_mastergrana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {
+    "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\si.20.17.lako_do_stana_mastergrana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
         "projectName": "LakoDoStana",
-        "projectPath": "C:\\Users\\User\\Desktop\\si.20.17.lako_do_stana_mastergrana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\si.20.17.lako_do_stana_mastergrana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

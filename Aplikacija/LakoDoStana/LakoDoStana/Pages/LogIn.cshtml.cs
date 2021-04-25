@@ -5,31 +5,38 @@ using System.Threading.Tasks;
 using LakoDoStana.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace LakoDoStana.Pages
 {
     public class LogInModel : PageModel
     {
+        
         [BindProperty]
         public string KorisnickoIme { get; set; }
         [BindProperty]
         public string Sifra { get; set; }
         public Korisnik Korisnik;
         public bool Greska = false;
-        [BindProperty]
-        public int ind { get; set; }
-        private readonly LDSContext context;
-        public LogInModel(LDSContext con)
+
+        private readonly IMongoCollection<Korisnik> _korisnici;
+
+        public LogInModel(ILDSDatabaseSettings settings)
         {
-            context = con;
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _korisnici = database.GetCollection<Korisnik>(settings.LDSCollectionName);
         }
+        
         public void OnGet()
         {
-            ind = 0;
+            
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            Korisnik = context.Korisnici.Where(x => x.Username == KorisnickoIme && x.Password == Sifra).FirstOrDefault();
+            Korisnik = _korisnici.AsQueryable<Korisnik>().Where(x => x.Username == KorisnickoIme && x.Password == Sifra).FirstOrDefault();
             if (Korisnik == null)
             {
                 Greska = true;
@@ -38,5 +45,6 @@ namespace LakoDoStana.Pages
             else
                 return RedirectToPage("/PocetnaZaKorisnika", new { username = Korisnik.Username});
         }
+        
     }
 }

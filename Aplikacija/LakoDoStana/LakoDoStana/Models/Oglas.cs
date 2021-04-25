@@ -32,7 +32,8 @@ namespace LakoDoStana.Models
         [Required]
         [StringLength(2000, MinimumLength = 10)]
         public string Opis { get; set; }
-        [DataType(DataType.Date)]
+        [BsonElement]
+        [BsonDateTimeOptions(DateOnly = true)]
         [Required]
         public DateTime DatumObjavljivanja { get; set; }
         [Required]

@@ -122,17 +122,6 @@
                             </div>
                         </li>
 
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="darkSwitch" />
-                                    <label class="custom-control-label" for="darkSwitch">Tamna Tema</label>
-                                </div>
-                            </a>
-                        </li>
-
-                        
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -144,7 +133,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in meni" aria-labelledby="userDropdown">
-                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.ID">
+                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.Id">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profil
                                 </a>
@@ -183,9 +172,9 @@
                         </thead>
 
                         <tbody id="telotabele">
-                            @if (Model.ListaOglasa != null)
+                            @if (Model.LogovaniKorisnik != null)
                             {
-                                @foreach (Models.Oglas o in Model.ListaOglasa)
+                                @foreach (Models.Oglas o in Model.LogovaniKorisnik.Oglasi)
                                 {
                                     <tr role="row">
                                         <td class="kol">@o.Grad</td>
@@ -194,23 +183,23 @@
                                         <td class="kol">@o.Kvadratura</td>
                                         <td class="kol">@o.BrojSoba</td>
                                         <td class="kol">@(o.TipObjekta == 1 ? "Kuća" : "Stan")</td>
-                                        <td class="kol">@o.DatumObjavljivanja</td>
+                                        <td class="kol">@o.DatumObjavljivanja.ToShortDateString()</td>
                                         <td class="kol">@o.BrojPregleda</td>
                                         <td class="kol">@(o.TipOglasa == 0 ? "Traži se cimer." : "Traže se stanari.")</td>
                                         <td class="kol">
-                                            <a class="btn btn-outline-white btn-rounded btn-sm px-2" asp-page="/IzmenaOglasa" asp-route-username="@Model.LogovaniKorisnik.Username" asp-route-oglasid="@{@o.OglasId}">
+                                            <a class="btn btn-outline-white btn-rounded btn-sm px-2" asp-page="/IzmenaOglasa" asp-route-username="@Model.LogovaniKorisnik.Username" asp-route-oglasid="@{@o.Id}">
                                                 <i class="fas fa-edit fa-lg"></i>
                                             </a>
                                         </td>
 
                                         <td class="kol">
-                                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="modal" data-target="#deleteModal@{@o.OglasId;}">
+                                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="modal" data-target="#deleteModal@{@o.Id;}">
                                                 <i class="fas fa-times fa-lg" style="color:#ff0000"></i>
                                             </button>
                                         </td>
 
                                     </tr>
-                                    <div class="modal fade" id="deleteModal@{@o.OglasId;}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="deleteModal@{@o.Id;}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header odjava">
@@ -223,7 +212,7 @@
                                                 <div class="modal-footer odjava">
 
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Otkaži</button>
-                                                    <a class="btn btn-primary" asp-route-iD="@o.OglasId" asp-route-username="@Model.LogovaniKorisnik.Username" asp-page-handler="Obrisi">Potvrdi</a>
+                                                    <a class="btn btn-primary" asp-route-iD="@o.Id" asp-route-username="@Model.LogovaniKorisnik.Username" asp-page-handler="Obrisi">Potvrdi</a>
 
                                                 </div>
                                             </div>

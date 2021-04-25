@@ -13,17 +13,17 @@ namespace LakoDoStana.Pages
 {
     public class IzmenaOglasaModel : PageModel
     {
+        
         public Korisnik LogovaniKorisnik { get; set; }
-        public Oglasivac Oglasivac { get; set; }
+        
         [BindProperty]
         public Oglas Oglas { get; set; }
-        private readonly LDSContext context;
+        
         [BindProperty(Name = "username", SupportsGet = true)]
         public string username { get; set; }
         [BindProperty(Name = "oglasid", SupportsGet = true)]
         public int oglasid { get; set; }
 
-        public List<Poruka> poruke;
 
         public List<string> slike;
 
@@ -33,10 +33,12 @@ namespace LakoDoStana.Pages
         public string TipObjekta { get; set; }
         [BindProperty]
         public string TipOglasa { get; set; }
-        public IzmenaOglasaModel(LDSContext con)
+        
+        public IzmenaOglasaModel()
         {
-            context = con;
+            
         }
+        /*
         public void OnGet(string username,int oglasid)
         {
             poruke = new List<Poruka>();
@@ -124,16 +126,6 @@ namespace LakoDoStana.Pages
             }
             return RedirectToPage("/PregledSvojihOglasa", new { username = LogovaniKorisnik.Username });
         }
-        public string IzracunajVreme(Poruka p)
-        {
-            int sekunde = Convert.ToInt32((Convert.ToDateTime(DateTime.Today.ToString("F")) - Convert.ToDateTime(p.DatumSlanja.ToString("F"))).TotalSeconds);
-            int minuti = sekunde / 60;
-            int sati = minuti / 60;
-            int dani = sati / 24;
-            if (dani != 0)
-                return dani + "d ago";
-            else
-                return "Today";
-        }
+        */
     }
 }

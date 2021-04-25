@@ -22,12 +22,12 @@ namespace LakoDoStana.Models
         public string Prezime { get; set; }
         [Required]
         public string Email { get; set; }
-        [Display(Name = "Datum rodjenja")]
-        [DataType(DataType.Date)]
+        [BsonElement]
+        [BsonDateTimeOptions(DateOnly = true)]
         [Required]
         public DateTime DatumRodjenja { get; set; }
-        [Display(Name = "Datum kreiranja naloga")]
-        [DataType(DataType.Date)]
+        [BsonElement]
+        [BsonDateTimeOptions(DateOnly = true)]
         [Required]
         public DateTime DatumKreiranjaNaloga { get; set; }
         [Required]

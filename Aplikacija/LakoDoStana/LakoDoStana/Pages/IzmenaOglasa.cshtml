@@ -147,7 +147,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in meni" aria-labelledby="userDropdown">
-                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.ID">
+                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.Id">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profil
                                 </a>
@@ -173,7 +173,7 @@
                         <div class="col-sm-6">
                             <hr>
                             <form class="validate-form" enctype="multipart/form-data" method="post" id="oglasForm">
-                                <input type="text" name="OglasId" id="OglasId" asp-for="@Model.Oglas.OglasId" style="display:none" />
+                                <input type="text" name="OglasId" id="OglasId" asp-for="@Model.Oglas.Id" style="display:none" />
                                 <input type="date" name="DatumObjavljivanja" id="DatumObjavljivanja" asp-for="@Model.Oglas.DatumObjavljivanja" style="display:none" />
                                 <input type="text" name="BrojPregleda" id="BrojPregleda" asp-for="@Model.Oglas.BrojPregleda" style="display:none" />
                                 <div class="form-group">

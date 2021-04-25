@@ -7,83 +7,72 @@ using LakoDoStana.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace LakoDoStana.Pages
 {
     public class PregledSvojihOglasaModel : PageModel
-    {
+    { 
+        
         public Korisnik LogovaniKorisnik { get; set; }
-        public List<KorisnikOglas> lista;
+        
         public List<Oglas> ListaOglasa;
-        private readonly LDSContext context;
+        
         [BindProperty(Name = "username", SupportsGet = true)]
         public string username { get; set; }
 
-        public List<Poruka> poruke;
-        public PregledSvojihOglasaModel(LDSContext con)
+        private readonly IMongoCollection<Korisnik> _korisnici;
+        public PregledSvojihOglasaModel(ILDSDatabaseSettings settings)
         {
-            context = con;
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _korisnici = database.GetCollection<Korisnik>(settings.LDSCollectionName);
         }
+    
         public void OnGet(string username)
         {
-            poruke = new List<Poruka>();
-            while (LogovaniKorisnik == null)
-                LogovaniKorisnik = context.Korisnici.Where(x => x.Username == username).FirstOrDefault();
-            lista = context.KorisniciOglasi.Where(x => x.KorisnikId == LogovaniKorisnik.ID && x.TipVeze == "Postavio").Include(x=>x.Oglas).ToList();
-            if(lista != null)
-            {
-                ListaOglasa = new List<Oglas>();
-                foreach (KorisnikOglas ko in lista)
-                    ListaOglasa.Add(ko.Oglas);
-            }
-            poruke = context.Poruke.Where(x => x.PrimalacId == LogovaniKorisnik.ID).Include(x => x.Posiljalac).ToList();
-            poruke.Reverse();
+            LogovaniKorisnik = _korisnici.AsQueryable<Korisnik>().Where(x => x.Username == username).Include(x => x.Oglasi).FirstOrDefault();
         }
-        public async Task<IActionResult> OnGetObrisiAsync(int id, string Username)
+        
+        public async Task<IActionResult> OnGetObrisiAsync(string id, string username)
         {
-            var oglas = await context.Oglasi.FindAsync(id);
-            if (oglas != null)
+            LogovaniKorisnik = _korisnici.AsQueryable<Korisnik>().Where(x => x.Username == username).Include(x => x.Oglasi).FirstOrDefault();
+            int brojpregleda = 0;
+            foreach (Oglas o in LogovaniKorisnik.Oglasi.ToList())
+                if (o.Id == id)
+                {
+                    brojpregleda = o.BrojPregleda;
+                    LogovaniKorisnik.Oglasi.Remove(o);
+                }
+            
+            DirectoryInfo di = new DirectoryInfo(@"wwwroot\Pictures\" + id);
+            foreach (FileInfo file in di.GetFiles())
             {
-                DirectoryInfo di = new DirectoryInfo(@"wwwroot\Pictures\" + oglas.OglasId);
-                foreach(FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-                Directory.Delete(@"wwwroot\Pictures\" + oglas.OglasId);
-                List<KorisnikOglas> vezanozaoglas = await context.KorisniciOglasi.Where(x => x.OglasId == oglas.OglasId).ToListAsync();
-                if (vezanozaoglas != null)
-                    foreach (KorisnikOglas ko in vezanozaoglas)
-                        context.KorisniciOglasi.Remove(ko);
-                context.Oglasi.Remove(oglas);
-                try
-                {
-                    await context.SaveChangesAsync();
-                }
-                catch (DbUpdateException ex)
-                {
-                    throw new Exception("Greška pri radu sa bazom!\n" + ex.Message);
-                }
-                catch (Exception exe)
-                {
-                    throw new Exception("Greška!" + exe.Message);
-                }
+                file.Delete();
             }
-            return base.RedirectToPage(new { username = Username });
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+            Directory.Delete(@"wwwroot\Pictures\" + id);
+
+            try
+            {
+                LogovaniKorisnik.BrojPostavljenihOglasa--;
+                LogovaniKorisnik.BrojUkupnihPregleda -= brojpregleda; 
+                _korisnici.ReplaceOne(x => x.Id == LogovaniKorisnik.Id, LogovaniKorisnik);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception("Greška pri radu sa bazom!\n" + ex.Message);
+            }
+            catch (Exception exe)
+            {
+                throw new Exception("Greška!" + exe.Message);
+            }
+            return base.RedirectToPage(new { username = username });
         }
-        public string IzracunajVreme(Poruka p)
-        {
-            int sekunde = Convert.ToInt32((Convert.ToDateTime(DateTime.Today.ToString("F")) - Convert.ToDateTime(p.DatumSlanja.ToString("F"))).TotalSeconds);
-            int minuti = sekunde / 60;
-            int sati = minuti / 60;
-            int dani = sati / 24;
-            if (dani != 0)
-                return dani + "d ago";
-            else
-                return "Today";
-        }
+        
     }
 }

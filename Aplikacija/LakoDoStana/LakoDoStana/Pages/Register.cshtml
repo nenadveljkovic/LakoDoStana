@@ -50,34 +50,34 @@
                     </span>
 
                     <div class="wrap-input100">
-                        <input id="ime" class="input100" type="text" name="ime" asp-for="@Model.Posetilac.Ime" placeholder="Ime">
+                        <input id="ime" class="input100" type="text" name="ime" asp-for="@Model.Korisnik.Ime" placeholder="Ime">
                         <span class="focus-input100" data-placeholder="&#xf207;"></span>
                     </div>
                     <!--validate-input data-validate="Unesite prezime"-->
                     <div class="wrap-input100">
-                        <input id="prezime" class="input100" type="text" name="prezime" asp-for="@Model.Posetilac.Prezime" placeholder="Prezime">
+                        <input id="prezime" class="input100" type="text" name="prezime" asp-for="@Model.Korisnik.Prezime" placeholder="Prezime">
                         <span class="focus-input100" data-placeholder="&#xf207;"></span>
                     </div>
 
                     <div class="wrap-input100">
-                        <input id="email" class="input100" type="email" name="email" asp-for="@Model.Posetilac.Email" placeholder="Email">
+                        <input id="email" class="input100" type="email" name="email" asp-for="@Model.Korisnik.Email" placeholder="Email">
                         <span class="focus-input100 glyphicon glyphicon-envelope" data-placeholder="&#x2709;"></span>
                         <div></div>
                     </div>
 
                     <div class="wrap-input100">
-                        <input id="datumrodjenja" class="input100" type="date" name="datumrodjenja" asp-for="@Model.Posetilac.DatumRodjenja" placeholder="Datum Rodjenja">
+                        <input id="datumrodjenja" class="input100" type="date" name="datumrodjenja" asp-for="@Model.Korisnik.DatumRodjenja" placeholder="Datum Rodjenja">
                         <span class="focus-input100 far fa-calendar-alt" data-placeholder="&#xf073;" ></span>
                     </div>
 
 
                     <div class="wrap-input100">
-                        <input id="username" class="input100" type="text" name="username" asp-for="@Model.Posetilac.Username" placeholder="Korisničko ime">
+                        <input id="username" class="input100" type="text" name="username" asp-for="@Model.Korisnik.Username" placeholder="Korisničko ime">
                         <span class="focus-input100" data-placeholder="&#xf207;"></span>
                     </div>
 
                     <div class="wrap-input100">
-                        <input id="password" class="input100" type="password" name="password" asp-for="@Model.Posetilac.Password" placeholder="Lozinka">
+                        <input id="password" class="input100" type="password" name="password" asp-for="@Model.Korisnik.Password" placeholder="Lozinka">
                         <span class="focus-input100" data-placeholder="&#xf191;"></span>
                     </div>
 
@@ -87,16 +87,11 @@
                     </div>
 
                     <div class="wrap-input100">
-                        <input id="pol" class="input100" type="text" maxlength="1" name="pol" asp-for="@Model.Posetilac.Pol" placeholder="Pol (M ili Z)">
+                        <input id="pol" class="input100" type="text" maxlength="1" name="pol" asp-for="@Model.Korisnik.Pol" placeholder="Pol (M ili Z)">
                         <span class="focus-input100 glyphicon glyphicon-plus" data-placeholder="&#x2b;"></span>
                     </div>
 
-                    <div class=" form-check">
-                        <label style="font-size:large; color:white;"><input type="radio" asp-for="@Model.TipNaloga" name="tipnaloga" value="posetilac" placeholder="Izaberi Tip" checked style="height:inherit;">&nbsp;&nbsp; Pretražujem oglase</label>
-                        <br /><br />
-                        <label style="font-size:large; color:white;"><input type="radio" asp-for="@Model.TipNaloga" name="tipnaloga" value="oglasivac" placeholder="Izaberi Tip" style="height:inherit;">&nbsp;&nbsp; Postavljam oglase</label>
-                        <span class="focus-input100"></span>
-                    </div>
+                    
                     <br /><br />
                     <select id="lista" style="display:none" asp-items="@Model.ListaUserName">                  
                     </select>

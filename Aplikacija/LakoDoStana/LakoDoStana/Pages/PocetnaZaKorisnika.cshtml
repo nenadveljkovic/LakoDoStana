@@ -121,14 +121,7 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="darkSwitch" />
-                                        <label class="custom-control-label" for="darkSwitch">Tamna Tema</label>
-                                    </div>
-                                </a>
-                            </li>
+                            
 
                             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -141,7 +134,7 @@
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in meni" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.ID">
+                                    <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.Id">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profil
                                     </a>
@@ -186,8 +179,8 @@
                                             <div class="listContainer gold gainlayout" id="add_1133914">
                                                 <div class="listBlock-1">
                                                     <div class="pictureContainer">
-                                                        <a asp-page="/PregledOglasa" asp-route-iD="@Model.LogovaniKorisnik.ID" asp-route-oglasID="@o.OglasId">
-                                                            <img src="@Model.slike[o.OglasId]" style="width:100%; height:100%;" />
+                                                        <a asp-page="/PregledOglasa" asp-route-iD="@Model.LogovaniKorisnik.Id" asp-route-oglasID="@o.Id">
+                                                            <img src="@Model.slike[o.Id]" style="width:100%; height:100%;" />
                                                         </a>
                                                     </div>
 
@@ -209,12 +202,11 @@
                                                 </div>
 
                                                 <div class="listBlock-3">
-                                                    <div class="parameters">
-                                                        <div class="param"><label>Šifra oglasa:</label> <span>@o.OglasId</span></div>
+                                                    <div class="parameters">                                                        
                                                         <div class="param"><span>@Model.VratiTipOglasa(o)</span></div>
                                                         <div class="param"><label>Broj soba:</label> <span>@o.BrojSoba</span></div>
                                                         <br />
-                                                        <div class="param"><a asp-page="/PregledOglasa" asp-route-iD="@Model.LogovaniKorisnik.ID" asp-route-oglasID="@o.OglasId"> Detalji </a> </div>
+                                                        <div class="param"><a asp-page="/PregledOglasa" asp-route-iD="@Model.LogovaniKorisnik.Id" asp-route-oglasID="@o.Id"> Detalji </a> </div>
                                                     </div>
                                                 </div>
                                             </div>

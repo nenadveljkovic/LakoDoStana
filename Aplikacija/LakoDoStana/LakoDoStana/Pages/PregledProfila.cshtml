@@ -122,18 +122,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </li>
-
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="darkSwitch" />
-                                    <label class="custom-control-label" for="darkSwitch">Tamna Tema</label>
-                                </div>
-                            </a>
-                        </li>
-
-                       
+                        </li> 
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -146,7 +135,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in meni" aria-labelledby="userDropdown">
-                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.ID">
+                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.Id">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profil
                                 </a>
@@ -197,7 +186,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-6">
                                         <label for="datumRodjenja"><h4>Datum Rodjenja</h4></label>
-                                        <label class="labelepodaci">@Model.LogovaniKorisnik.DatumRodjenja</label>
+                                        <label class="labelepodaci">@Model.LogovaniKorisnik.DatumRodjenja.ToShortDateString()</label>
                                         <input type="date" name="datumrodjenja" class="form-control poljapodaci" id="datumrodjenja" placeholder="Datum Rodjenja" title="enter your datebirth." asp-for="@Model.LogovaniKorisnik.DatumRodjenja">
                                     </div>
                                 </div>
@@ -232,36 +221,21 @@
                                 <div class="form-group">
                                     <div class="col-xs-6">
                                         <label for="brpregleda"><h4>Datum Kreiranja Naloga</h4></label>
-                                        <label id="brpregleda" asp-for="@Model.LogovaniKorisnik.DatumKreiranjaNaloga">@Model.LogovaniKorisnik.DatumKreiranjaNaloga</label>
+                                        <label id="brpregleda" asp-for="@Model.LogovaniKorisnik.DatumKreiranjaNaloga">@Model.LogovaniKorisnik.DatumKreiranjaNaloga.ToShortDateString()</label>
                                     </div>
                                 </div>
-                                @if (Model.LogovaniKorisnik is Models.Posetilac)
-                                {
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="brpregleda"><h4>Broj Pregledanih Oglasa</h4></label>
-                                            <label id="brpregleda">@Model.Posetilac.BrojPregledanihOglasa</label>
-                                        </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <label for="broglasa"><h4>Broj Postavljenih Oglasa</h4></label>
+                                        <label id="broglasa" asp-for="@Model.LogovaniKorisnik.BrojPostavljenihOglasa">@Model.LogovaniKorisnik.BrojPostavljenihOglasa </label>
                                     </div>
-                                }
-                                @if (Model.LogovaniKorisnik is Models.Oglasivac)
-                                {
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="broglasa"><h4>Broj Postavljenih Oglasa</h4></label>
-                                            <label id="broglasa">@Model.Oglasivac.BrojPostavljenihOglasa </label>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <label for="broglasa"><h4>Broj Ukupnih Pregleda</h4></label>
+                                        <label id="broglasa" asp-for="@Model.LogovaniKorisnik.BrojUkupnihPregleda">@Model.LogovaniKorisnik.BrojUkupnihPregleda </label>
                                     </div>
-                                }
-                                @if (Model.LogovaniKorisnik is Models.Administrator)
-                                {
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="brobrisanih"><h4>Broj Obrisanih naloga</h4></label>
-                                            <label id="brobrisanih">@Model.Admin.BrojObrisanihNaloga</label>
-                                        </div>
-                                    </div>
-                                }
+                                </div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <br>

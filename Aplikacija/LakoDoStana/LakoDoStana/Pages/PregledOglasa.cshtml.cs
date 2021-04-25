@@ -14,13 +14,14 @@ namespace LakoDoStana.Pages
 {
     public class PregledOglasaModel : PageModel
     {
+        
         public Korisnik LogovaniKorisnik { get; set; }
 
         [BindProperty]
         public Oglas Oglas { get; set; }
 
         [BindProperty]
-        public Oglasivac PostavioOglas { get; set; }
+        public Korisnik PostavioOglas { get; set; }
 
         [BindProperty(Name = "iD", SupportsGet = true)]
         public int iD { get; set; }
@@ -28,19 +29,20 @@ namespace LakoDoStana.Pages
         [BindProperty(Name = "oglasiD", SupportsGet = true)]
         public int oglasiD { get; set; }
 
-        public readonly LDSContext context;
+        
 
         [BindProperty]
         public string TextPoruke { get; set; }
 
-        public List<Poruka> poruke;
+        
 
         public List<string> slike;
-
-        public PregledOglasaModel(LDSContext con)
+        
+        public PregledOglasaModel()
         {
-            context = con;
+            
         }
+        /*
         public async Task OnGet(int iD, int oglasiD)
         {
             poruke = new List<Poruka>();
@@ -103,7 +105,7 @@ namespace LakoDoStana.Pages
                 throw new Exception("Greška!" + exe.Message);
             }
         }
-
+        */
         public string VratiTipOb()
         {
             if (Oglas.TipObjekta == 1)
@@ -119,19 +121,7 @@ namespace LakoDoStana.Pages
             else
                 return "Traže se stanari.";
         }
-
-        public string IzracunajVreme(Poruka p)
-        {
-            int sekunde = Convert.ToInt32((Convert.ToDateTime(DateTime.Today.ToString("F")) - Convert.ToDateTime(p.DatumSlanja.ToString("F"))).TotalSeconds);
-            int minuti = sekunde / 60;
-            int sati = minuti / 60;
-            int dani = sati / 24;
-            if (dani != 0)
-                return dani + "d ago";
-            else
-                return "Today";
-        }
-        
+        /*
         public async Task<IActionResult> OnPostAsync()
         {
             while (LogovaniKorisnik == null)
@@ -180,5 +170,6 @@ namespace LakoDoStana.Pages
             }
             return Page();
         }
+        */
     }
 }

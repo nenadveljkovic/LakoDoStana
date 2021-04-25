@@ -7,90 +7,55 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using LakoDoStana.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace LakoDoStana.Pages
 {
     public class RegisterModel : PageModel
     {
         [BindProperty]
-        public Posetilac Posetilac { get; set; }
-        public Oglasivac Oglasivac;
-
-        public Korisnik LogovaniKorisnik;
+        public Korisnik Korisnik { get; set; }
   
-        [BindProperty]
-        public string TipNaloga { get; set; }
         public SelectList ListaUserName { get; set; }
-        private readonly LDSContext context;
-
-        [BindProperty(Name = "adminid", SupportsGet = true)]
-        public int Adminid { get; set; }
-        public RegisterModel(LDSContext con)
+        private readonly IMongoCollection<Korisnik> _korisnici;
+       
+        public RegisterModel(ILDSDatabaseSettings settings)
         {
-            context = con;
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _korisnici = database.GetCollection<Korisnik>(settings.LDSCollectionName);
         }
         public void OnGet()
         {
-            IQueryable<string> lista = context.Korisnici.Select(x => x.Username);
+            IQueryable<string> lista = _korisnici.AsQueryable<Korisnik>().Select(x => x.Username);
             ListaUserName = new SelectList(lista.ToList());
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            string adminusername="";
             if (!ModelState.IsValid)
             {
                 return Page();
             }
             else
             {
-                if (Adminid != 0)
+                Korisnik.BrojPostavljenihOglasa = 0;
+                Korisnik.BrojUkupnihPregleda = 0;
+                Korisnik.DatumKreiranjaNaloga = Convert.ToDateTime(DateTime.Today.ToString("F"));
+                try
                 {
-                    Korisnik k = context.Korisnici.Where(x => x.ID == Adminid).FirstOrDefault();
-                    adminusername = k.Username;
+                    _korisnici.InsertOne(Korisnik);
                 }
-                Posetilac.DatumKreiranjaNaloga = Convert.ToDateTime(DateTime.Today.ToString("F"));
-                if (TipNaloga == "oglasivac")
+                catch (DbUpdateException ex)
                 {
-                    Oglasivac = new Oglasivac(Posetilac);
-                    Oglasivac.BrojPostavljenihOglasa = 0;
-                    Oglasivac.BrojUkupnihPregleda = 0;
-                    Oglasivac.DatumKreiranjaNaloga = Convert.ToDateTime(DateTime.Today.ToString("F"));
-                    context.Korisnici.Add(Oglasivac);
-                    try
-                    {
-                        await context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        throw new Exception("Greška pri radu sa bazom!\n" + ex.Message);
-                    }
-                    catch (Exception exe)
-                    {
-                        throw new Exception("Greška!" + exe.Message);
-                    }
+                    throw new Exception("Greška pri radu sa bazom!\n" + ex.Message);
                 }
-                else
+                catch (Exception exe)
                 {
-                    Posetilac.BrojPregledanihOglasa = 0;
-                    Posetilac.DatumKreiranjaNaloga = Convert.ToDateTime(DateTime.Today.ToString("F"));
-                    context.Korisnici.Add(Posetilac);
-                    try
-                    {
-                        await context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        throw new Exception("Greška pri radu sa bazom!\n" + ex.Message);
-                    }
-                    catch (Exception exe)
-                    {
-                        throw new Exception("Greška!" + exe.Message);
-                    }
+                    throw new Exception("Greška!" + exe.Message);
                 }
-                if (adminusername == "")
-                    return RedirectToPage("/PocetnaZaKorisnika", new { username = Posetilac.Username });
-                else
-                    return RedirectToPage("/PocetnaZaKorisnika", new { username = adminusername });
+
+                return RedirectToPage("/PocetnaZaKorisnika", new { username = Korisnik.Username });
             }
         }
     }

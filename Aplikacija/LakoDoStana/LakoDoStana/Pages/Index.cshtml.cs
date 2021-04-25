@@ -12,9 +12,6 @@ namespace LakoDoStana.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
-        [BindProperty]
-        public int ind { get; set;}
-
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
@@ -22,7 +19,7 @@ namespace LakoDoStana.Pages
 
         public void OnGet()
         {
-            ind = 0;
+           
         }
     }
 }

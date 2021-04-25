@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TEaO5+GPQwnHFXd75Gr8hIxii/UDveMqLctI8xfIeBBBHXoUudQFooxeK8hF8g9A78tfVuPcc6IK2/2ScaUUpg==",
+  "dgSpecHash": "hrZjzogBvPavXBqF1ALiB5vsWq51XE2+BIHN2CHVnmhaoCjgUtdx3a8RlLeN/8H/QT+IFIDnoY2eLQAKEmgOow==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\Desktop\\si.20.17.lako_do_stana_mastergrana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\dnsclient\\1.4.0\\dnsclient.1.4.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
