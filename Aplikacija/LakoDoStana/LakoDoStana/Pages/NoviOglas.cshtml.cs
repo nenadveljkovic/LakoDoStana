@@ -116,7 +116,7 @@ namespace LakoDoStana.Pages
             {
                 throw new Exception("Greška!" + exe.Message);
             }
-            return RedirectToPage("/PregledOglasa", new { iD = LogovaniKorisnik.Id, oglasiD = Oglas.Id });
+            return RedirectToPage("/PregledOglasa", new { username = LogovaniKorisnik.Username, oglasiD = Oglas.Id });
         }
        
     }

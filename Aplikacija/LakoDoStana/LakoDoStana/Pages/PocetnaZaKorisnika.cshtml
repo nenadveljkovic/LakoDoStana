@@ -29,6 +29,12 @@
     <!--Tamna Tema-->
     <link href="~/lib/LightDark/TamnaTema.css" rel="stylesheet" />
 
+    <style>
+        #content-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -179,7 +185,7 @@
                                             <div class="listContainer gold gainlayout" id="add_1133914">
                                                 <div class="listBlock-1">
                                                     <div class="pictureContainer">
-                                                        <a asp-page="/PregledOglasa" asp-route-iD="@Model.LogovaniKorisnik.Id" asp-route-oglasID="@o.Id">
+                                                        <a asp-page="/PregledOglasa" asp-route-username="@Model.LogovaniKorisnik.Username" asp-route-oglasID="@o.Id">
                                                             <img src="@Model.slike[o.Id]" style="width:100%; height:100%;" />
                                                         </a>
                                                     </div>
@@ -206,7 +212,7 @@
                                                         <div class="param"><span>@Model.VratiTipOglasa(o)</span></div>
                                                         <div class="param"><label>Broj soba:</label> <span>@o.BrojSoba</span></div>
                                                         <br />
-                                                        <div class="param"><a asp-page="/PregledOglasa" asp-route-iD="@Model.LogovaniKorisnik.Id" asp-route-oglasID="@o.Id"> Detalji </a> </div>
+                                                        <div class="param"><a asp-page="/PregledOglasa" asp-route-username="@Model.LogovaniKorisnik.Username" asp-route-oglasID="@o.Id"> Detalji </a> </div>
                                                     </div>
                                                 </div>
                                             </div>

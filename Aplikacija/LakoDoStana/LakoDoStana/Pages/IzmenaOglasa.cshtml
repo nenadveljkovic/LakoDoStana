@@ -267,7 +267,7 @@
                                         <span asp-validation-for="@Model.files"></span>
                                     </dd>
                                 </dl>
-                                <button id="Save" name="Save" type="submit" asp-route-username="@Model.LogovaniKorisnik.Username" asp-page-handler="Postavi" class="btn btn-lg btn-success"><i class="fas fa-check-circle"></i> &nbsp;Sačuvaj izmene</button>
+                                <button id="Save" name="Save" type="submit" asp-route-username="@Model.LogovaniKorisnik.Username" asp-route-oglasid="@Model.Oglas.Id" asp-page-handler="Postavi" class="btn btn-lg btn-success"><i class="fas fa-check-circle"></i> &nbsp;Sačuvaj izmene</button>
                             </form>
                             <a class="btn btn-lg btn-danger" style="background-color:red;" asp-page="/PregledSvojihOglasa" asp-route-username="@Model.LogovaniKorisnik.Username"><i class="fas fa-times"></i> &nbsp;Otkaži</a>
 

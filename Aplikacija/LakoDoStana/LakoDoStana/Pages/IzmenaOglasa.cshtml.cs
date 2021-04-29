@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
+using System.Collections;
 
 namespace LakoDoStana.Pages
 {
@@ -15,10 +17,10 @@ namespace LakoDoStana.Pages
     {
         
         public Korisnik LogovaniKorisnik { get; set; }
-        
+
         [BindProperty]
         public Oglas Oglas { get; set; }
-        
+
         [BindProperty(Name = "username", SupportsGet = true)]
         public string username { get; set; }
         [BindProperty(Name = "oglasid", SupportsGet = true)]
@@ -33,46 +35,48 @@ namespace LakoDoStana.Pages
         public string TipObjekta { get; set; }
         [BindProperty]
         public string TipOglasa { get; set; }
-        
-        public IzmenaOglasaModel()
+
+        private readonly IMongoCollection<Korisnik> _korisnici;
+
+        public IzmenaOglasaModel(ILDSDatabaseSettings settings)
         {
-            
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _korisnici = database.GetCollection<Korisnik>(settings.LDSCollectionName);
         }
-        /*
-        public void OnGet(string username,int oglasid)
+
+        public void OnGet(string username, string oglasid)
         {
-            poruke = new List<Poruka>();
-            while (LogovaniKorisnik == null)
-                LogovaniKorisnik = context.Korisnici.Where(x => x.Username == username).FirstOrDefault();
-            Oglasivac = context.Oglasivaci.Find(LogovaniKorisnik.ID);
-            poruke = context.Poruke.Where(x => x.PrimalacId == LogovaniKorisnik.ID).Include(x => x.Posiljalac).ToList();
-            poruke.Reverse();
-            Oglas = context.Oglasi.Find(oglasid);
+            LogovaniKorisnik = _korisnici.AsQueryable<Korisnik>().Where(x => x.Username == username).Include(x => x.Oglasi).FirstOrDefault();
+            foreach(Oglas o in LogovaniKorisnik.Oglasi)
+            {
+                if (o.Id == oglasid)
+                    Oglas = o;
+            }
 
             slike = new List<string>();
             string[] putanje;
-            if (Directory.Exists(@"wwwroot\Pictures\" + Oglas.OglasId))
+            if (Directory.Exists(@"wwwroot\Pictures\" + Oglas.Id))
             {
-                putanje = Directory.GetFiles(@"wwwroot\Pictures\" + Oglas.OglasId);
+                putanje = Directory.GetFiles(@"wwwroot\Pictures\" + Oglas.Id);
                 foreach (string s in putanje)
                 {
                     string pom = Path.GetFileName(s);
-                    slike.Add("Pictures/" + Oglas.OglasId + "/" + pom);
+                    slike.Add("Pictures/" + Oglas.Id + "/" + pom);
                 }
             }
             else
             {
                 putanje = Directory.GetFiles(@"wwwroot\Pictures");
                 string pom = Path.GetFileName(putanje.First());
-                slike[Oglas.OglasId] = ("Pictures/" + pom);
+                slike.Add("Pictures/" + pom);
             }
         }
 
-        public async Task<IActionResult> OnPostPostaviAsync(string username)
+        public async Task<IActionResult> OnPostPostaviAsync(string username, string oglasid)
         {
-            while (LogovaniKorisnik == null)
-                LogovaniKorisnik = context.Korisnici.Where(x => x.Username == username).FirstOrDefault();
-            Oglasivac = context.Oglasivaci.Find(LogovaniKorisnik.ID);
+            LogovaniKorisnik = _korisnici.AsQueryable<Korisnik>().Where(x => x.Username == username).Include(x => x.Oglasi).FirstOrDefault();
 
             //Ucitavanje slika
             long size = files.Sum(f => f.Length);
@@ -80,7 +84,7 @@ namespace LakoDoStana.Pages
             {
                 if (formFile.Length > 0)
                 {
-                    string filePath = "wwwroot/Pictures/" + Oglas.OglasId + "/" + formFile.FileName;
+                    string filePath = "wwwroot/Pictures/" + Oglas.Id + "/" + formFile.FileName;
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
                     using (FileStream stream = new FileStream(filePath, FileMode.Create))
@@ -111,10 +115,16 @@ namespace LakoDoStana.Pages
             else
                 Oglas.TipOglasa = 1;
 
-            context.Oglasi.Update(Oglas);
+            foreach (Oglas o in LogovaniKorisnik.Oglasi.ToList())
+            {
+                if (o.Id == oglasid)
+                    LogovaniKorisnik.Oglasi.Remove(o);
+            }
+            Oglas.Id = oglasid;
+            LogovaniKorisnik.Oglasi.Add(Oglas);
             try
             {
-                await context.SaveChangesAsync();
+                _korisnici.ReplaceOne(x => x.Id == LogovaniKorisnik.Id, LogovaniKorisnik);
             }
             catch (DbUpdateException ex)
             {
@@ -126,6 +136,5 @@ namespace LakoDoStana.Pages
             }
             return RedirectToPage("/PregledSvojihOglasa", new { username = LogovaniKorisnik.Username });
         }
-        */
     }
 }
