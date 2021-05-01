@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "N:\\Projekti\\Baze\\LakoDoStana\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {}
+    "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {}
   },
   "projects": {
-    "N:\\Projekti\\Baze\\LakoDoStana\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {
+    "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "N:\\Projekti\\Baze\\LakoDoStana\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
         "projectName": "LakoDoStana",
-        "projectPath": "N:\\Projekti\\Baze\\LakoDoStana\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
-        "packagesPath": "C:\\Users\\Nikola\\.nuget\\packages\\",
-        "outputPath": "N:\\Projekti\\Baze\\LakoDoStana\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\LakoDoStana.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\lakodostana\\Aplikacija\\LakoDoStana\\LakoDoStana\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Nikola\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +29,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -38,7 +40,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -85,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
