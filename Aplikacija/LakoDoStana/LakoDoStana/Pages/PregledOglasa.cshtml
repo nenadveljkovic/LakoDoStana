@@ -1,0 +1,344 @@
+﻿@page
+@model LakoDoStana.Pages.PregledOglasaModel
+@{
+    ViewData["Title"] = "PregledOglasa";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Custom fonts for this template-->
+    <link href="~/TemaPocetnaZaKorisnika/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/TemaPocetnaZaKorisnika/css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <!-- Css tabele-->
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!--Pregled Oglasa-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+    <!--SlideShow-->
+    <link href="~/TemaPocetnaZaKorisnika/css/Slideshow.css" rel="stylesheet" />
+
+    <link href="~/TemaPocetnaZaKorisnika/css/PregledOglasa.css" rel="stylesheet" />
+
+    <!--Tamna Tema-->
+    <link href="~/lib/LightDark/TamnaTema.css" rel="stylesheet" />
+
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-page="/PocetnaZaKorisnika" asp-route-username="@Model.LogovaniKorisnik.Username">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">LDS portal</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Kontrolna tabla</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            
+
+            
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/PregledSvojihOglasa" asp-route-username="@Model.LogovaniKorisnik.Username">
+                        <span>Pregled svojih oglasa</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/NoviOglas" asp-route-username="@Model.LogovaniKorisnik.Username">
+                        <span>Postavi novi oglas</span>
+                    </a>
+                </li>
+            
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content" class="bg-white" style="height:100%">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Model.LogovaniKorisnik.Username</span>
+
+                                <i class="fas fa-user-cog"></i>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in meni" aria-labelledby="userDropdown">
+                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.Id">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profil
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item itemi" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Odjava
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+
+                <hr>
+                <div class="container bootstrap bg-white">
+                    <div class="row">
+                        <div class="col-sm-8"><h1>Informacije O Oglasu</h1></div>
+                        <div class="col-sm-4"><h1>Informacije O Oglasavaču</h1></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <hr>
+                            <div class="form-group">
+                                <div class="col-xs-6" style="display:none">
+                                    <label for="OglasiD"><h4>OglasID</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.Id</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="Grad"><h4>Grad</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.Grad</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="Adresa"><h4>Adresa</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.Adresa</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="Cena"><h4>Cena (U Evrima)</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.Cena</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="Kvadratura"><h4>Kvadratura (U &#13217; )</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.Kvadratura</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="BrojSoba"><h4>Broj Soba</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.BrojSoba</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="TipObjekta"><h4>Tip Objekta (Stan ili Kuća)</h4></label>
+                                    <label class="labelepodaci">@Model.VratiTipOb()</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="Opis"><h4>Kratak Opis</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.Opis</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="DatumObjavljivanja"><h4>Datum Objavljivanja</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.DatumObjavljivanja.ToShortDateString()</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="BrojPregleda"><h4>Broj Pregleda</h4></label>
+                                    <label class="labelepodaci">@Model.Oglas.BrojPregleda</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label for="TipOglasa"><h4>Tip Oglasa</h4></label>
+                                    <label class="labelepodaci">@Model.VratiTipOg()</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <hr>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label for="OglasivacIme"><h4>Ime</h4></label>
+                                    <label class="labelepodaci">@Model.PostavioOglas.Ime</label>
+                                </div>
+                                <div class="col-xs-4">
+                                    <label for="Oglasivacusername"><h4>Username</h4></label>
+                                    <label class="labelepodaci">@Model.PostavioOglas.Username</label>
+                                </div>
+                                <div class="col-xs-4">
+                                    <label for="OglasivacEmail"><h4>Email</h4></label>
+                                    <label class="labelepodaci">@Model.PostavioOglas.Email</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @{
+                    int br = 0;
+                    <div class="slideshow-container bg-white">
+
+                        <!-- Full-width images with number and caption text -->
+                        @foreach (string s in Model.slike)
+                        {
+                            br++;
+                            <div class="mySlides">
+                                <div class="numbertext">@br / @Model.slike.Count</div>
+                                <img src="@s" style="width:100%" />
+                                <div class="text">Caption @br</div>
+                            </div>
+                        }
+
+                        <!-- Next and previous buttons -->
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+                    <br>
+                    <div class="bg-white" style="text-align:center">
+                        @for (int i = 1; i <= br; i++)
+                        {
+                            <!-- The dots/circles -->
+
+                            <span class="dot" onclick="currentSlide(i)"></span>
+
+                        }
+                    </div>
+                }
+
+                <!-- End of Main Content -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Lako do stana 2020</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header odjava">
+                        <h5 class="modal-title" id="exampleModalLabel">Potvrda odjavljivanja</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body odjava">Selektujte "Odjava" ispod ako ste spremni da okončate svoju trenutnu sesiju.</div>
+                    <div class="modal-footer odjava">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Otkaži</button>
+                        <a class="btn btn-primary" asp-page="/Index">Odjava</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="~/TemaPocetnaZaKorisnika/vendor/jquery/jquery.min.js"></script>
+        <script src="~/TemaPocetnaZaKorisnika/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="~/TemaPocetnaZaKorisnika/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="~/TemaPocetnaZaKorisnika/js/sb-admin-2.min.js"></script>
+
+        <!--Skripta tabele-->
+
+        <script src="~/TemaPocetnaZaKorisnika/js/sb-admin-2.min.js"></script>
+
+        <script src="~/TemaPocetnaZaKorisnika/js/PregledOglasa.js"></script>
+        <script src="~/TemaPocetnaZaKorisnika/js/OdgovorPoruka.js"></script>
+
+        <!--SlideShow-->
+        <script src="~/TemaPocetnaZaKorisnika/js/slideshow.js"></script>
+
+        <!--Tamna Tema-->
+        <script src="~/lib/LightDark/dark-mode-switch.min.js"></script>
+
+</body>
+
+</html>
+

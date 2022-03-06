@@ -1,0 +1,336 @@
+﻿@page
+@model LakoDoStana.Pages.IzmenaOglasaModel
+@{
+    ViewData["Title"] = "IzmenaOglasa";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Custom fonts for this template-->
+    <link href="~/TemaPocetnaZaKorisnika/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/TemaPocetnaZaKorisnika/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="~/TemaPocetnaZaKorisnika/css/NoviOglas.css" rel="stylesheet" />
+
+    <!-- Css tabele-->
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/TemaPocetnaZaKorisnika/css/EditOglasa.css" rel="stylesheet" />
+
+    <!--Tamna Tema-->
+    <link href="~/lib/LightDark/TamnaTema.css" rel="stylesheet" />
+
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-page="/PocetnaZaKorisnika" asp-route-username="@Model.LogovaniKorisnik.Username">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">LDS portal</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Kontrolna tabla</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            
+
+            
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/PregledSvojihOglasa" asp-route-username="@Model.LogovaniKorisnik.Username">
+                        <span>Pregled svojih oglasa</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/NoviOglas" asp-route-username="@Model.LogovaniKorisnik.Username">
+                        <span>Postavi novi oglas</span>
+                    </a>
+                </li>
+            
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content" class="bg-white" style="height:100%">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Model.LogovaniKorisnik.Username</span>
+
+                                <i class="fas fa-user-cog"></i>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in meni" aria-labelledby="userDropdown">
+                                <a class="dropdown-item itemi" asp-page="/PregledProfila" asp-route-iD="@Model.LogovaniKorisnik.Id">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profil
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item itemi" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Odjava
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container bootstrap bg-white">
+                    <div class="row">
+                        <div class="col-sm-12"><h1>Izmena oglasa</h1></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <hr>
+                            <form class="validate-form" enctype="multipart/form-data" method="post" id="oglasForm">
+                                <input type="text" name="OglasId" id="OglasId" asp-for="@Model.Oglas.Id" style="display:none" />
+                                <input type="date" name="DatumObjavljivanja" id="DatumObjavljivanja" asp-for="@Model.Oglas.DatumObjavljivanja" style="display:none" />
+                                <input type="text" name="BrojPregleda" id="BrojPregleda" asp-for="@Model.Oglas.BrojPregleda" style="display:none" />
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="grad"><b>Grad</b></label>
+                                        <input type="text" class="form-control" name="grad" id="grad" placeholder="Unesite grad..." asp-for="@Model.Oglas.Grad">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="adresa"><b>Adresa</b></label>
+                                        <input type="text" class="form-control" name="adresa" id="adresa" placeholder="Unesite adresu..." asp-for="@Model.Oglas.Adresa">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="cena"><b>Cena</b></label>
+                                        <input type="number" class="form-control" name="cena" id="cena" placeholder="Unesite cenu..." asp-for="@Model.Oglas.Cena">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="kvadratura"><b>Kvadratura</b></label>
+                                        <input type="number" class="form-control" name="kvadratura" id="kvadratura" placeholder="Unesite kvadraturu..." asp-for="@Model.Oglas.Kvadratura">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="BrojSoba"><b>Broj soba</b></label>
+                                        <input type="number" class="form-control" name="BrojSoba" id="BrojSoba" placeholder="Unesite broj soba..." asp-for="@Model.Oglas.BrojSoba">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="TipObjekta"><b>Tip objekta</b></label>
+                                        <div class=" form-check">
+                                            <label style="font-size:large;"><input type="radio" asp-for="@Model.TipObjekta" name="TipObjekta" value="Kuća" placeholder="Izaberi Tip" checked="@(Model.Oglas.TipObjekta == 1?true:false)" style="height:inherit;">&nbsp;&nbsp; Kuća</label>
+                                            <br /><br />
+                                            <label style="font-size:large;"><input type="radio" asp-for="@Model.TipObjekta" name="TipObjekta" value="Stan" placeholder="Izaberi Tip" style="height:inherit;" checked="@(Model.Oglas.TipObjekta == 1?false:true)">&nbsp;&nbsp; Stan</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="opis"><b>Opis</b></label>
+                                        <textarea type="text" class="form-control" name="opis" id="opis" placeholder="Unesite opis oglasa..." asp-for="@Model.Oglas.Opis"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6">
+                                        <label for="TipOglasa"><b>Tip oglasa</b></label>
+                                        <div class=" form-check">
+                                            <label style="font-size:large;"><input type="radio" asp-for="@Model.TipOglasa" name="TipOglasa" value="Traži se cimer" placeholder="Izaberi Tip" checked="@(Model.Oglas.TipOglasa == 0?true:false)" style="height:inherit;">&nbsp;&nbsp; Traži se cimer</label>
+                                            <br /><br />
+                                            <label style="font-size:large;"><input type="radio" asp-for="@Model.TipOglasa" name="TipOglasa" value="Traže se stanari" placeholder="Izaberi Tip" style="height:inherit;" checked="@(Model.Oglas.TipOglasa == 0?false:true)">&nbsp;&nbsp; Traže se stanari</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <br>
+                                    </div>
+
+                                    <hr>
+                                </div><!--Dugmici-->
+
+                                <div class="red">
+                                    @foreach (string s in Model.slike)
+                                    {
+                                        <div class="column">
+                                            <img src="@s" alt="Snow" style="width:100%">
+                                        </div>
+                                    }
+                                </div>
+
+                                <dl>
+                                    <dt>
+                                        <label> Slike: </label>
+                                    </dt>
+                                    <dd>
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Postojeće slike se ne brišu već se novoodabrane slike samo dodaju!"><i class="fas fa-info-circle"></i></button>
+                                        <input class="bg-white" asp-for="@Model.files" type="file" multiple>
+                                        <span asp-validation-for="@Model.files"></span>
+                                    </dd>
+                                </dl>
+                                <button id="Save" name="Save" type="submit" asp-route-username="@Model.LogovaniKorisnik.Username" asp-route-oglasid="@Model.Oglas.Id" asp-page-handler="Postavi" class="btn btn-lg btn-success"><i class="fas fa-check-circle"></i> &nbsp;Sačuvaj izmene</button>
+                            </form>
+                            <a class="btn btn-lg btn-danger" style="background-color:red;" asp-page="/PregledSvojihOglasa" asp-route-username="@Model.LogovaniKorisnik.Username"><i class="fas fa-times"></i> &nbsp;Otkaži</a>
+
+                        </div><!--/tab-content-->
+
+
+                    </div>
+
+                </div>
+                <!-- End of Main Content -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Lako do stana 2020</span>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header odjava">
+                    <h5 class="modal-title" id="exampleModalLabel">Potvrda odjavljivanja</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body odjava">Selektujte "Odjava" ispod ako ste spremni da okončate svoju trenutnu sesiju.</div>
+                <div class="modal-footer odjava">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Otkaži</button>
+                    <a class="btn btn-primary" asp-page="/Index">Odjava</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/TemaPocetnaZaKorisnika/vendor/jquery/jquery.min.js"></script>
+    <script src="~/TemaPocetnaZaKorisnika/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/TemaPocetnaZaKorisnika/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/TemaPocetnaZaKorisnika/js/sb-admin-2.min.js"></script>
+    <script src="~/TemaPocetnaZaKorisnika/js/NoviOglas.js"></script>
+
+    <!--Skripta tabele-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+
+    <!--Tamna Tema-->
+    <script src="~/lib/LightDark/dark-mode-switch.min.js"></script>
+
+</body>
+
+</html>
+

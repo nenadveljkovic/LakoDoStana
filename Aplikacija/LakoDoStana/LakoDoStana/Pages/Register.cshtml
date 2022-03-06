@@ -1,0 +1,135 @@
+﻿@page
+@model LakoDoStana.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+    <head>
+        <title>Login V3</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+        <link rel="icon" type="~/TemaLogin/images/icons/favicon.ico" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/fonts/iconic/css/material-design-iconic-font.min.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/vendor/animate/animate.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/vendor/animsition/css/animsition.min.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/vendor/select2/select2.min.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <link href="~/TemaLogin/css/util.css" rel="stylesheet" type="text/css" />
+        <link href="~/TemaLogin/css/main.css" rel="stylesheet" type="text/css" />
+        <!--===============================================================================================-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/lib/js/signup.js"></script>
+    </head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('TemaLogin/images/wallpaper.jpg');">
+            <div class="wrap-login100">
+                <form class="login100-form validate-form" method="post" id="signupForm">
+                    <span class="login100-form-logo">
+                        <i class="fa fa-address-card-o" data-placeholder="&#xf2bc;"></i>
+                    </span>
+
+                    <span class="login100-form-title p-b-34 p-t-27">
+                        Registruj se
+                    </span>
+
+                    <div class="wrap-input100">
+                        <input id="ime" class="input100" type="text" name="ime" asp-for="@Model.Korisnik.Ime" placeholder="Ime">
+                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    </div>
+                    <!--validate-input data-validate="Unesite prezime"-->
+                    <div class="wrap-input100">
+                        <input id="prezime" class="input100" type="text" name="prezime" asp-for="@Model.Korisnik.Prezime" placeholder="Prezime">
+                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    </div>
+
+                    <div class="wrap-input100">
+                        <input id="email" class="input100" type="email" name="email" asp-for="@Model.Korisnik.Email" placeholder="Email">
+                        <span class="focus-input100 glyphicon glyphicon-envelope" data-placeholder="&#x2709;"></span>
+                        <div></div>
+                    </div>
+
+                    <div class="wrap-input100">
+                        <input id="datumrodjenja" class="input100" type="date" name="datumrodjenja" asp-for="@Model.Korisnik.DatumRodjenja" placeholder="Datum Rodjenja">
+                        <span class="focus-input100 far fa-calendar-alt" data-placeholder="&#xf073;" ></span>
+                    </div>
+
+
+                    <div class="wrap-input100">
+                        <input id="username" class="input100" type="text" name="username" asp-for="@Model.Korisnik.Username" placeholder="Korisničko ime">
+                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    </div>
+
+                    <div class="wrap-input100">
+                        <input id="password" class="input100" type="password" name="password" asp-for="@Model.Korisnik.Password" placeholder="Lozinka">
+                        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    </div>
+
+                    <div class="wrap-input100">
+                        <input id="rpassword" class="input100" type="password" name="rpassword" id="rpassword" placeholder="Ponovi lozinku">
+                        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    </div>
+
+                    <div class="wrap-input100">
+                        <input id="pol" class="input100" type="text" maxlength="1" name="pol" asp-for="@Model.Korisnik.Pol" placeholder="Pol (M ili Z)">
+                        <span class="focus-input100 glyphicon glyphicon-plus" data-placeholder="&#x2b;"></span>
+                    </div>
+
+                    
+                    <br /><br />
+                    <select id="lista" style="display:none" asp-items="@Model.ListaUserName">                  
+                    </select>
+
+                    <div class="container-login100-form-btn">
+                        <button id="submit" class="login100-form-btn">
+                            Napravi nalog
+                        </button>
+                    </div>
+                    <div class="text-center p-t-90">
+                        <a class="txt1" asp-page="/Index">
+                            Nazad
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="~/TemaLogin/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/TemaLogin/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/TemaLogin/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/TemaLogin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/TemaLogin/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/TemaLogin/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/TemaLogin/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/TemaLogin/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/TemaLogin/js/main.js"></script>
+
+</body>
+
